@@ -111,7 +111,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/getSeaLevels/:scenarioName', (req, res) => {
     const scenarioName = req.params.scenarioName;
-    console.log(scenarioName);
+    //console.log(scenarioName);
     let results = [];
 
     fs.createReadStream(path.join(csvFilePath, `${scenarioName}.csv`))
@@ -194,9 +194,6 @@ function calculatePremium(scenarioData, strikePercentage, notional, termYears, s
   
     const totalPayout = monthlyPayouts.reduce((sum, payout) => sum + payout, 0);
     const annualPremium = (totalPayout / termYears) * Math.pow(1.03, termYears);
-
-    //console.log(annualPremium);
-    //console.log(scenarioData);
   
     return {
       annualPremium,
@@ -212,6 +209,8 @@ app.listen(PORT, () => {
 });
 
 /*
+
+Sample curl request to test payout
 
 curl -X GET http://localhost:3000/calculateExpectedTotalPayout \
     -H "Content-Type: application/json" \
