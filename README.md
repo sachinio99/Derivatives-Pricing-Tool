@@ -4,13 +4,14 @@
 
 Node version: 18.17.0 
 
-In the base directory: 
+After cloning:
+```cd EventualFinalRound```  
 
 ```npm install react react-router-dom axios chart.js```
 
 Install the necessary packages to run the backend server:   
   
-```cd pricingtool/backend```  
+```cd backend```  
 
 Install babel then the other dependencies to run the express server and Sequelize database  
 ```npm install --save-dev @babel/core @babel/preset-env @babel/register```  
@@ -24,11 +25,13 @@ Install babel then the other dependencies to run the express server and Sequeliz
 # Run the project: 
 
 Backend- make sure you are in the backend folder and have the above packages installed
-```npm start```
+```cd backend```  
+```npm start```  
+
+(Use sudo at the beginning if you are running into permission issues)  
 
 
-Frontend-Open a new terminal window and run the following:
-```cd pricingtool```  
+Frontend-Open a new terminal window and run the following from the inside /EventualFinalRound:
 
 ```npm start```
 
