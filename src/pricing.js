@@ -91,7 +91,9 @@ const PricingForm = () => {
         setSeaLevelData(response.data.scenarioData.map(item => parseFloat(item['2060 rf Index (in)'])));
         setLabels(response.data.scenarioData.map(item => item.Date));
         setCurrentIndexLevel(seaLevelData[1]);
+        console.log(currentIndexLevel);
         setStrikeLevel(currentIndexLevel * (1 + formData.strike / 100));
+        console.log(strikeLevel);
         console.log(seaLevelData);
         console.log(labels);
         const strikeData = new Array(scenarioData.length).fill(formData.strike);     
@@ -99,7 +101,7 @@ const PricingForm = () => {
         setErrors({});
       })
       .catch(error => {
-        setErrors({ server: error.response?.data?.error || 'Server error' });
+        setErrors({ server: error.response?.data?.error || 'Click the submit button again to generate the strike line' });
       });
     } else {
       setErrors(validationErrors);
@@ -108,18 +110,18 @@ const PricingForm = () => {
 
   
   const data = {
-    labels: labels, // Example labels array
+    labels: labels, 
     datasets: [
       {
         label: 'Sea Level Rise',
-        data: seaLevelData, // Example data array
+        data: seaLevelData, 
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
       },
       {
         label: 'Strike',
-        data: new Array(labels.length).fill(strikeLevel),
+        data: new Array(labels.length).fill(currentIndexLevel * (1 + formData.strike / 100)),
         borderColor: 'red',
         borderWidth: 2,
         fill: false,
