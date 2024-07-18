@@ -4,27 +4,14 @@
 
 Node version: 18.17.0 
 
-After cloning:
-```cd EventualFinalRound```  
+After cloning: 
 
-```npm install react react-router-dom axios chart.js```
-
-Install the necessary packages to run the backend server:   
-  
-```cd backend```  
-
-Install babel then the other dependencies to run the express server and Sequelize database  
-```npm install --save-dev @babel/core @babel/preset-env @babel/register```  
-  
-```npm install express mysql cors nodemon bcrypt csv-parser axios```  
-  
-```npm i sequelize```  
-
+```chmod +x setup.sh```  
+```./setup.sh```
 
 
 # Run the project: 
 
-Backend- make sure you are in the backend folder and have the above packages installed
 ```cd backend```  
 ```npm start```  
 
