@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const PricingForm = () => {
@@ -31,41 +30,59 @@ const PricingForm = () => {
       ...formData,
       [name]: value
     });
+
+    const fieldErrors = validateField(name, value);
+    setErrors({
+      ...errors,
+      [name]: fieldErrors[name]
+    });
+  };
+
+  const validateField = (name, value) => {
+    const errors = {};
+    if (name === 'notional') {
+      if (!value) {
+        errors.notional = 'Notional is required';
+      } else if (value < 1000000 || value > 500000000) {
+        errors.notional = 'Notional must be between $1.0mm and $500.0mm';
+      }
+    } else if (name === 'originationDate') {
+      const originationDate = new Date(value);
+      const minDate = new Date('2024-08-01');
+      const maxDate = new Date('2024-12-31');
+      if (!value) {
+        errors.originationDate = 'Origination Date is required';
+      } else if (originationDate < minDate || originationDate > maxDate) {
+        errors.originationDate = 'Origination Date must be between August 2024 and December 2024';
+      }
+    } else if (name === 'term') {
+      if (!value) {
+        errors.term = 'Term is required';
+      } else if (value < 5 || value > 15) {
+        errors.term = 'Term must be between 5 and 15 years';
+      }
+    } else if (name === 'strike') {
+      if (!value) {
+        errors.strike = 'Strike is required';
+      } else if (value < 0 || value > 100) {
+        errors.strike = 'Strike must be between 0% and 100%';
+      }
+    } else if (name === 'seaLevelRiseScenario') {
+      if (!value) {
+        errors.seaLevelRiseScenario = 'Sea Level Rise Scenario is required';
+      }
+    }
+    return errors;
   };
 
   const validate = () => {
     const errors = {};
-    if (!formData.notional) {
-      errors.notional = 'Notional is required';
-    } else if (formData.notional < 1000000 || formData.notional > 500000000) {
-      errors.notional = 'Notional must be between $1.0mm and $500.0mm';
-    }
-
-    const originationDate = new Date(formData.originationDate);
-    const minDate = new Date('2024-08-01');
-    const maxDate = new Date('2024-12-31');
-    if (!formData.originationDate) {
-      errors.originationDate = 'Origination Date is required';
-    } else if (originationDate < minDate || originationDate > maxDate) {
-      errors.originationDate = 'Origination Date must be between August 2024 and December 2024';
-    }
-
-    if (!formData.term) {
-      errors.term = 'Term is required';
-    } else if (formData.term < 5 || formData.term > 15) {
-      errors.term = 'Term must be between 5 and 15 years';
-    }
-
-    if (!formData.strike) {
-      errors.strike = 'Strike is required';
-    } else if (formData.strike < 0 || formData.strike > 100) {
-      errors.strike = 'Strike must be between 0% and 100%';
-    }
-
-    if (!formData.seaLevelRiseScenario) {
-      errors.seaLevelRiseScenario = 'Sea Level Rise Scenario is required';
-    }
-
+    Object.keys(formData).forEach((key) => {
+      const fieldErrors = validateField(key, formData[key]);
+      if (fieldErrors[key]) {
+        errors[key] = fieldErrors[key];
+      }
+    });
     return errors;
   };
 
@@ -91,12 +108,8 @@ const PricingForm = () => {
         setSeaLevelData(response.data.scenarioData.map(item => parseFloat(item['2060 rf Index (in)'])));
         setLabels(response.data.scenarioData.map(item => item.Date));
         setCurrentIndexLevel(seaLevelData[1]);
-        console.log(currentIndexLevel);
         setStrikeLevel(currentIndexLevel * (1 + formData.strike / 100));
-        console.log(strikeLevel);
-        console.log(seaLevelData);
-        console.log(labels);
-        const strikeData = new Array(scenarioData.length).fill(formData.strike);     
+        const strikeData = new Array(scenarioData.length).fill(formData.strike);
         setStrikeData(strikeData);
         setErrors({});
       })
@@ -108,13 +121,12 @@ const PricingForm = () => {
     }
   };
 
-  
   const data = {
-    labels: labels, 
+    labels: labels,
     datasets: [
       {
         label: 'Sea Level Rise',
-        data: seaLevelData, 
+        data: seaLevelData,
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -149,7 +161,6 @@ const PricingForm = () => {
       }
     }
   };
-
 
   return (
     <div style={styles.container}>
@@ -218,7 +229,7 @@ const PricingForm = () => {
             {errors.seaLevelRiseScenario && <p style={styles.error}>{errors.seaLevelRiseScenario}</p>}
           </div>
           <button type="submit" style={styles.button}>Submit</button>
-          {errors.server && <p style={styles.error}>{errors.server}</p>}
+          {errors.server && <p style={styles.prompt}>{errors.server}</p>}
         </form>
         {premium !== null && totalPayout !== null && (
           <div style={styles.resultsContainer}>
@@ -303,6 +314,10 @@ const styles = {
     color: 'red',
     fontSize: '0.875rem',
     marginTop: '5px',
+  },
+  prompt:{
+    color: 'black',
+    fontWeight: 'bold'
   },
   resultsContainer: {
     display: 'flex',
