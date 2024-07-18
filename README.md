@@ -130,3 +130,6 @@ The `calculatePremium` function is used to compute the annual premium and total 
 4. The annual premium is calculated by dividing the total payout by the term length and applying a 3% annual increase.
 
 The function returns an object containing the annual premium, total payout, and the scenario data used in the calculation.
+
+
+<img width="988" alt="Screen Shot 2024-07-18 at 11 11 48 AM" src="https://github.com/user-attachments/assets/30ec2988-7b22-4ab7-b611-5babb7336292">
