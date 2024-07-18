@@ -1,36 +1,14 @@
-import React, { useEffect, useContext } from 'react';
-import { BrowserRouter, Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './LandingPage';
 import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
 import NavBar from './NavBar';
 import PricingForm from './pricing';
-import { AuthProvider, AuthContext } from './AuthContext';
+import { AuthProvider} from './AuthContext';
 
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { isAuthenticated } = useContext(AuthContext);
-  
-    console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
-  
-    return (
-      <Route
-        {...rest}
-        render={props =>
-          !isAuthenticated ? (
-            <Component {...props} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: props.location }
-              }}
-            />
-          )
-        }
-      />
-    );
-  };
+
 const Routes = () => {
     return (
       <BrowserRouter>
