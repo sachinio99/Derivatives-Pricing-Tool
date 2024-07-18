@@ -4,8 +4,7 @@
 
 Node version: 18.17.0 
 
-After cloning:
-```cd EventualFinalRound```  
+After cloning: 
 
 ```chmod +x setup.sh```  
 ```./setup.sh```
