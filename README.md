@@ -23,6 +23,9 @@ Frontend-Open a new terminal window and run the following from the inside /Event
 ```npm start```
 
 
+(Minor Bug Alert) On the pricing page, you have to click the submit button 3 times before the stike line is visible, working on fixing this
+
+
 
 # Time Blocking:
 
