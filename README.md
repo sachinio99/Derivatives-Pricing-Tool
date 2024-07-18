@@ -1,29 +1,36 @@
 # EventualFinalRound
-Pricing tool mockup for eventual final round interview
-
-Something to keep in mind as you try and run this. If you run into permission issues when running npm start, use 
-
-sudo npm start for a quick workaround so you dont have to change any permissions in you system files 
-
 
 # Setup and Run The Project: 
 
 Node version: 18.17.0 
 
-Install the necessary packages to run the backend server: 
-```cd pricingtool/backend``` 
-```npm install express mysql cors nodemon```\n
-```npm i sequelize```
+In the base directory: 
+
+```npm install react react-router-dom axios chart.js```
+
+Install the necessary packages to run the backend server:   
+  
+```cd pricingtool/backend```  
+
+Install babel then the other dependencies to run the express server and Sequelize database  
+```npm install --save-dev @babel/core @babel/preset-env @babel/register```  
+  
+```npm install express mysql cors nodemon bcrypt csv-parser axios```  
+  
+```npm i sequelize```  
 
 
 
-Start the project: 
+# Run the project: 
 
 Backend- make sure you are in the backend folder and have the above packages installed
 ```npm start```
 
+
 Frontend-Open a new terminal window and run the following:
-```cd pricingtool``` ```npm start```
+```cd pricingtool```  
+
+```npm start```
 
 
 
