@@ -23,7 +23,7 @@ Frontend-Open a new terminal window and run the following from the inside /Event
 ```npm start```
 
 
-(Minor Bug Alert) On the pricing page, you have to click the submit button 3 times before the stike line is visible, working on fixing this
+Update-Fixed this -->(Minor Bug Alert) On the pricing page, you have to click the submit button 3 times before the stike line is visible, working on fixing this
 
 
 
@@ -59,6 +59,14 @@ Each component has its own styling object, this just helped me with managing min
 Based on what scenario the user selected, I used the filestream library and csv-parser to pull in the correct sea level data. The csvs for this project are located in public/csvs/
 
 These csvs are pulled in at the time of payout calculation, and the logic is all handled in the backend so only one request needs to be made from the frontend.
+
+### Displaying Price And Chart 
+
+When the user is trying to input values, whether or not each of them are valid is updated as the value in the form field changes. This makes for a much more responsive UI. React has a handleChange method that can be called whenever a change is detected in an input field. 
+
+Once the payouts have been calculated, the frontend pulls in the data returned from the API. I used the useState hook to mount all the information before the component is rendered
+
+The chart is generated using chart.js- and I used the data from the relevant csv to create the labels for the x-axis
 
 # Major Roadblocks and How I Addressed Them
 
