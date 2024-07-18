@@ -9,32 +9,28 @@ import { AuthProvider, AuthContext } from './AuthContext';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      history.push('/login');
-    }
-  }, [isAuthenticated, history]);
-
-  console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
-
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
-};
-
-
+    const { isAuthenticated } = useContext(AuthContext);
+  
+    console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
+  
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          !isAuthenticated ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
+            />
+          )
+        }
+      />
+    );
+  };
 const Routes = () => {
     return (
       <BrowserRouter>

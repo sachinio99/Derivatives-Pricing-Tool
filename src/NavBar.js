@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
-import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
 
+  console.log('NavBar - isAuthenticated:', isAuthenticated);
+
   return (
-    <BrowserRouter>
     <nav style={styles.nav}>
       <ul style={styles.navList}>
         <li style={styles.navItem}><Link to="/" style={styles.navLink}>Home</Link></li>
@@ -24,7 +24,6 @@ const NavBar = () => {
         )}
       </ul>
     </nav>
-    </BrowserRouter>
   );
 };
 
